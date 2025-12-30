@@ -1,94 +1,101 @@
-import type { Metadata } from 'next'
+'use client'
+
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import ContactForm from '@/components/ContactForm'
 import CTABanner from '@/components/CTABanner'
 import Image from 'next/image'
 import Link from 'next/link'
+import { motion } from 'framer-motion'
+import ScrollAnimation, { StaggerContainer, StaggerItem } from '@/components/ScrollAnimation'
 import { cities } from '@/data/cities'
-
-export const metadata: Metadata = {
-  title: 'Attic Insulation | Desert Spray Foaming - Seminole, TX',
-  description: 'Professional attic insulation services in Seminole, TX. Improve energy efficiency and comfort with expert insulation from Desert Spray Foaming.',
-}
 
 export default function AtticInsulationPage() {
   return (
     <>
       <Header />
 
-      <section className="relative min-h-[500px] flex items-center">
+      <section className="relative min-h-[400px] md:min-h-[500px] flex items-center overflow-hidden">
         <div className="absolute inset-0">
           <Image src="/images/attic-insulation.jpg" alt="Attic Insulation" fill className="object-cover" priority />
           <div className="absolute inset-0 bg-purple-dark/70" />
         </div>
-        <div className="container-custom relative z-10 py-20">
-          <div className="max-w-2xl">
-            <h1 className="text-4xl md:text-5xl font-bold text-white uppercase tracking-wide leading-tight mb-6">
+        <div className="container-custom relative z-10 py-16 md:py-20">
+          <motion.div
+            className="max-w-2xl"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+          >
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white uppercase tracking-wide leading-tight mb-6">
               Attic Insulation
             </h1>
-            <p className="text-gray-200 text-lg mb-8">
+            <p className="text-gray-200 text-base md:text-lg mb-8">
               Improve your home&apos;s energy efficiency with professional attic insulation services from Desert Spray Foaming.
             </p>
-            <Link href="/contact-us/" className="btn-primary">Request a Free Estimate</Link>
-          </div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+            >
+              <Link href="/contact-us/" className="btn-primary">Request a Free Estimate</Link>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
-      <section className="py-20">
+      <section className="py-16 md:py-20 overflow-hidden">
         <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
+            <ScrollAnimation direction="left">
               <h2 className="section-title text-gray-800 mb-6">Why Attic Insulation Matters</h2>
-              <p className="text-gray-600 leading-relaxed mb-6">
+              <p className="text-gray-600 leading-relaxed mb-6 text-sm md:text-base">
                 Your attic is one of the most important areas to insulate properly. Heat rises, and without adequate insulation, you could be losing a significant amount of your heating and cooling energy through your roof.
               </p>
-              <ul className="space-y-4 mb-8">
-                <li className="flex items-start gap-3">
-                  <svg className="w-6 h-6 text-tan-gold flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                  <span className="text-gray-600">Reduces energy bills by up to 30%</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <svg className="w-6 h-6 text-tan-gold flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                  <span className="text-gray-600">Maintains consistent temperatures throughout your home</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <svg className="w-6 h-6 text-tan-gold flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                  <span className="text-gray-600">Prevents ice dams and roof damage</span>
-                </li>
-              </ul>
+              <StaggerContainer className="space-y-3 md:space-y-4 mb-8" staggerDelay={0.1}>
+                {[
+                  'Reduces energy bills by up to 30%',
+                  'Maintains consistent temperatures throughout your home',
+                  'Prevents ice dams and roof damage'
+                ].map((item, index) => (
+                  <StaggerItem key={index}>
+                    <motion.div className="flex items-start gap-3" whileHover={{ x: 5 }}>
+                      <svg className="w-5 h-5 md:w-6 md:h-6 text-tan-gold flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                      <span className="text-gray-600 text-sm md:text-base">{item}</span>
+                    </motion.div>
+                  </StaggerItem>
+                ))}
+              </StaggerContainer>
               <Link href="/contact-us/" className="btn-secondary">Get a Free Quote</Link>
-            </div>
-            <div className="relative">
-              <Image src="/images/insulation-work.jpg" alt="Attic insulation installation" width={600} height={450} className="w-full h-auto" />
-            </div>
+            </ScrollAnimation>
+            <ScrollAnimation direction="right" delay={0.2}>
+              <motion.div whileHover={{ scale: 1.02 }} transition={{ duration: 0.3 }}>
+                <Image src="/images/insulation-work.jpg" alt="Attic insulation installation" width={600} height={450} className="w-full h-auto rounded-lg shadow-xl" />
+              </motion.div>
+            </ScrollAnimation>
           </div>
         </div>
       </section>
 
-      <section className="py-20 bg-purple-dark">
+      <section className="py-16 md:py-20 bg-purple-dark overflow-hidden">
         <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <div>
-              <h2 className="text-3xl font-bold text-white uppercase mb-4">Get Your Free Attic Insulation Quote</h2>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
+            <ScrollAnimation direction="left">
+              <h2 className="text-2xl md:text-3xl font-bold text-white uppercase mb-4">Get Your Free Attic Insulation Quote</h2>
               <ContactForm darkBackground />
-            </div>
-            <div className="flex flex-col justify-center">
-              <h3 className="text-xl font-bold text-tan-gold uppercase mb-4">Areas We Serve</h3>
+            </ScrollAnimation>
+            <ScrollAnimation direction="right" delay={0.2} className="flex flex-col justify-center">
+              <h3 className="text-lg md:text-xl font-bold text-tan-gold uppercase mb-4">Areas We Serve</h3>
               <div className="grid grid-cols-2 gap-2">
                 {cities.slice(0, 20).map((city) => (
-                  <Link key={city.slug} href={`/attic-insulation-${city.slug}-tx/`} className="text-gray-300 hover:text-tan-gold text-sm">
+                  <Link key={city.slug} href={`/attic-insulation-${city.slug}-tx/`} className="text-gray-300 hover:text-tan-gold text-xs md:text-sm transition-colors">
                     {city.name}, TX
                   </Link>
                 ))}
               </div>
-            </div>
+            </ScrollAnimation>
           </div>
         </div>
       </section>
