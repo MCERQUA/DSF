@@ -67,7 +67,7 @@ export default function Header() {
             {/* Logo */}
             <Link href="/" className="flex-shrink-0">
               <Image
-                src="/images/desert-spray-foam-logo.webp"
+                src="/images/new-logo.png"
                 alt="Desert Spray Foaming"
                 width={240}
                 height={134}
