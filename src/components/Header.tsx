@@ -78,9 +78,6 @@ export default function Header() {
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-6">
-              <Link href="/" className="text-white font-bold uppercase text-sm tracking-[3px] hover:text-tan-gold transition-colors">
-                Home
-              </Link>
               <Link href="/about-us/" className="text-white font-bold uppercase text-sm tracking-[3px] hover:text-tan-gold transition-colors">
                 About Us
               </Link>
@@ -131,6 +128,10 @@ export default function Header() {
                 Gallery
               </Link>
 
+              <Link href="/blog/" className="text-white font-bold uppercase text-sm tracking-[3px] hover:text-tan-gold transition-colors">
+                Blog
+              </Link>
+
               <Link
                 href="/contact-us/"
                 className="bg-tan-gold hover:bg-white hover:text-[#46276a] text-white font-bold uppercase text-sm tracking-[3px] px-4 py-2.5 transition-all duration-300"
@@ -157,9 +158,6 @@ export default function Header() {
           {/* Mobile Menu */}
           {mobileMenuOpen && (
             <div className="lg:hidden pb-4 bg-[#46276a] border-t border-tan-gold">
-              <Link href="/" className="block py-3 text-white font-bold uppercase tracking-[3px] text-sm">
-                Home
-              </Link>
               <Link href="/about-us/" className="block py-3 text-white font-bold uppercase tracking-[3px] text-sm">
                 About Us
               </Link>
@@ -216,6 +214,10 @@ export default function Header() {
 
               <Link href="/services-gallery/" className="block py-3 text-white font-bold uppercase tracking-[3px] text-sm">
                 Gallery
+              </Link>
+
+              <Link href="/blog/" className="block py-3 text-white font-bold uppercase tracking-[3px] text-sm">
+                Blog
               </Link>
 
               {/* Mobile contact info */}
