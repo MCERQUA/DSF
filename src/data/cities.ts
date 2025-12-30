@@ -136,29 +136,50 @@ export const services: Service[] = [
 ];
 
 // County pages
-export const counties = [
-  { name: "Andrews County", slug: "andrews-county" },
-  { name: "Gaines County", slug: "gaines-county" },
-  { name: "Lubbock County", slug: "lubbock-county" },
-  { name: "Terry County", slug: "terry-county" },
-  { name: "Yoakum County", slug: "yoakum-county" },
+export interface County {
+  name: string;
+  slug: string;
+  cities: string[]; // Cities in this county
+}
+
+export const counties: County[] = [
+  { name: "Andrews County", slug: "andrews-county", cities: ["Andrews"] },
+  { name: "Gaines County", slug: "gaines-county", cities: ["Seminole", "Seagraves", "Loop"] },
+  { name: "Lubbock County", slug: "lubbock-county", cities: ["Lubbock", "Idalou", "Slaton", "Wolfforth", "Shallowater", "Ransom Canyon", "New Deal"] },
+  { name: "Terry County", slug: "terry-county", cities: ["Brownfield", "Meadow", "Wellman", "Tokio"] },
+  { name: "Yoakum County", slug: "yoakum-county", cities: ["Denver City", "Plains"] },
+];
+
+// Services that have county pages (based on original site)
+export const countyServices = [
+  "spray-foam-insulation",
+  "attic-insulation",
+  "insulation-contractor",
 ];
 
 // Helper function to generate all location page slugs
 export function generateAllLocationSlugs(): string[] {
   const slugs: string[] = [];
 
+  // Generate city pages for all services
   for (const service of services) {
     for (const city of cities) {
       slugs.push(`${service.slug}-${city.slug}-tx`);
     }
   }
 
+  // Generate county pages for specific services
+  for (const serviceSlug of countyServices) {
+    for (const county of counties) {
+      slugs.push(`${serviceSlug}-${county.slug}-tx`);
+    }
+  }
+
   return slugs;
 }
 
-// Helper function to parse a location slug
-export function parseLocationSlug(slug: string): { service: Service; city: City } | null {
+// Helper function to parse a location slug (city or county)
+export function parseLocationSlug(slug: string): { service: Service; city: City } | { service: Service; county: County } | null {
   const withoutTx = slug.replace(/-tx$/, '');
 
   // Sort services by slug length (longest first) to match correctly
@@ -166,8 +187,16 @@ export function parseLocationSlug(slug: string): { service: Service; city: City 
 
   for (const service of sortedServices) {
     if (withoutTx.startsWith(service.slug + '-')) {
-      const citySlug = withoutTx.slice(service.slug.length + 1);
-      const city = cities.find(c => c.slug === citySlug);
+      const locationSlug = withoutTx.slice(service.slug.length + 1);
+
+      // Check if it's a county
+      const county = counties.find(c => c.slug === locationSlug);
+      if (county) {
+        return { service, county };
+      }
+
+      // Check if it's a city
+      const city = cities.find(c => c.slug === locationSlug);
       if (city) {
         return { service, city };
       }
@@ -175,4 +204,14 @@ export function parseLocationSlug(slug: string): { service: Service; city: City 
   }
 
   return null;
+}
+
+// Type guard to check if result is a city page
+export function isCityPage(result: { service: Service; city: City } | { service: Service; county: County }): result is { service: Service; city: City } {
+  return 'city' in result;
+}
+
+// Type guard to check if result is a county page
+export function isCountyPage(result: { service: Service; city: City } | { service: Service; county: County }): result is { service: Service; county: County } {
+  return 'county' in result;
 }
