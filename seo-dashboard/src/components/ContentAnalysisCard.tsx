@@ -254,6 +254,92 @@ export function ContentAnalysisCard({ analysis }: ContentAnalysisCardProps) {
           </div>
         </div>
       )}
+
+      {/* NEW: Title Tag Issues */}
+      {(analysis.duplicateTitles?.length > 0 || analysis.titlesTooLong?.length > 0 || analysis.titlesTooShort?.length > 0) && (
+        <div className="card">
+          <h3 className="card-header text-amber-400">Title Tag Issues</h3>
+          <p className="text-sm text-slate-400 mb-4">
+            Title tags should be unique (50-60 characters) and descriptive for each page.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+            <div className="p-3 bg-slate-700/30 rounded-lg text-center">
+              <p className="text-2xl font-bold text-red-400">{analysis.duplicateTitles?.length || 0}</p>
+              <p className="text-sm text-slate-400">Duplicate Patterns</p>
+            </div>
+            <div className="p-3 bg-slate-700/30 rounded-lg text-center">
+              <p className="text-2xl font-bold text-amber-400">{analysis.titlesTooLong?.length || 0}</p>
+              <p className="text-sm text-slate-400">Too Long (&gt;60 chars)</p>
+            </div>
+            <div className="p-3 bg-slate-700/30 rounded-lg text-center">
+              <p className="text-2xl font-bold text-amber-400">{analysis.titlesTooShort?.length || 0}</p>
+              <p className="text-sm text-slate-400">Too Short (&lt;30 chars)</p>
+            </div>
+          </div>
+
+          {analysis.duplicateTitles && analysis.duplicateTitles.length > 0 && (
+            <div className="space-y-3">
+              {analysis.duplicateTitles.slice(0, 3).map((dup, idx) => (
+                <div key={idx} className="p-3 bg-slate-700/50 rounded-lg">
+                  <p className="text-sm text-slate-300 italic mb-2 line-clamp-1">
+                    Pattern: &ldquo;{dup.title}&rdquo;
+                  </p>
+                  <p className="text-xs text-slate-500">
+                    Used on {dup.pages.length} pages
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* NEW: Heading Hierarchy Issues */}
+      {(analysis.pagesWithoutH2?.length > 0 || analysis.headingHierarchyIssues?.length > 0) && (
+        <div className="card">
+          <h3 className="card-header text-blue-400">Heading Structure Issues</h3>
+          <p className="text-sm text-slate-400 mb-4">
+            Proper heading hierarchy (H1 → H2 → H3) helps search engines understand content structure.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="p-3 bg-slate-700/30 rounded-lg">
+              <p className="text-2xl font-bold text-amber-400">{analysis.pagesWithoutH2?.length || 0}</p>
+              <p className="text-sm text-slate-400">Pages without H2 subheadings</p>
+            </div>
+            <div className="p-3 bg-slate-700/30 rounded-lg">
+              <p className="text-2xl font-bold text-amber-400">{analysis.headingHierarchyIssues?.length || 0}</p>
+              <p className="text-sm text-slate-400">Heading skip issues (H1→H3)</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* NEW: URL Issues */}
+      {(analysis.urlsWithUnderscores?.length > 0 || analysis.urlsTooLong?.length > 0) && (
+        <div className="card">
+          <h3 className="card-header text-amber-400">URL Issues</h3>
+          <p className="text-sm text-slate-400 mb-4">
+            URLs should use hyphens (not underscores) and be under 200 characters.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {analysis.urlsWithUnderscores && analysis.urlsWithUnderscores.length > 0 && (
+              <div className="p-3 bg-slate-700/30 rounded-lg">
+                <p className="text-2xl font-bold text-amber-400">{analysis.urlsWithUnderscores.length}</p>
+                <p className="text-sm text-slate-400">URLs with underscores</p>
+              </div>
+            )}
+            {analysis.urlsTooLong && analysis.urlsTooLong.length > 0 && (
+              <div className="p-3 bg-slate-700/30 rounded-lg">
+                <p className="text-2xl font-bold text-amber-400">{analysis.urlsTooLong.length}</p>
+                <p className="text-sm text-slate-400">URLs over 200 characters</p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   )
 }

@@ -87,6 +87,26 @@ export class ReportGenerator {
       linkAnalysis,
       blogAnalysis,
       contentAnalysis,
+      technicalAnalysis: {
+        // Placeholder - would be populated by actual analysis
+        hasSitemapXml: true,
+        hasRobotsTxt: true,
+        sitemapInRobots: true,
+        sitemapUrl: null,
+        robotsTxtIssues: [],
+        crawlDepthDistribution: {
+          depth0: 1,
+          depth1: 0,
+          depth2: 0,
+          depth3: 0,
+          depth4Plus: 0,
+        },
+        pagesAt4PlusDepth: [],
+        isHttps: true,
+        hasMixedContent: false,
+        hasLlmsTxt: false,
+        llmsTxtIssues: [],
+      },
       actionItems,
       pageDetails: new Map(), // Would be populated for detailed page views
     };

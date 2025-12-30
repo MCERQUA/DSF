@@ -81,12 +81,15 @@ export interface BlogConnectionAnalysis {
 export interface PageContentAnalysis {
   url: string;
   title: string;
+  titleLength: number;          // NEW: Title length for checks
+  isTitleUnique: boolean;       // NEW: Is title unique across site
   metaDescription: string;
   metaDescriptionLength: number;
   isMetaUnique: boolean;
   h1Count: number;
   h2Count: number;
   h3Count: number;
+  hasHeadingHierarchyIssue: boolean;  // NEW: Skips heading levels (H1->H3)
   totalWordCount: number;
   uniqueWordCount: number;      // Non-template words
   templateRatio: number;        // % of content that's template
@@ -120,6 +123,42 @@ export interface ContentDepthAnalysis {
     good: number;       // 1000-2000 words
     comprehensive: number; // 2000+ words
   };
+  // NEW: Title Tag Analysis
+  missingTitles: string[];
+  duplicateTitles: { title: string; pages: string[] }[];
+  titlesTooShort: string[];     // <30 characters
+  titlesTooLong: string[];      // >60 characters
+  // NEW: URL Issues
+  urlsWithUnderscores: string[];
+  urlsTooLong: string[];        // >200 characters
+  // NEW: Heading Hierarchy
+  headingHierarchyIssues: string[];  // Pages that skip heading levels
+  pagesWithoutH2: string[];          // Pages missing H2 subheadings
+}
+
+// NEW: Technical SEO Analysis
+export interface TechnicalSEOAnalysis {
+  // Sitemap & Robots
+  hasSitemapXml: boolean;
+  hasRobotsTxt: boolean;
+  sitemapInRobots: boolean;
+  sitemapUrl: string | null;
+  robotsTxtIssues: string[];
+  // Crawl Depth
+  crawlDepthDistribution: {
+    depth0: number;   // Homepage
+    depth1: number;   // 1 click from home
+    depth2: number;   // 2 clicks
+    depth3: number;   // 3 clicks
+    depth4Plus: number; // 4+ clicks (problematic)
+  };
+  pagesAt4PlusDepth: string[];
+  // HTTPS/Security (basic)
+  isHttps: boolean;
+  hasMixedContent: boolean;
+  // AI Search Readiness
+  hasLlmsTxt: boolean;
+  llmsTxtIssues: string[];
 }
 
 // Full SEO Report
@@ -136,6 +175,7 @@ export interface SEOReport {
   linkAnalysis: LinkGraphAnalysis;
   blogAnalysis: BlogConnectionAnalysis;
   contentAnalysis: ContentDepthAnalysis;
+  technicalAnalysis: TechnicalSEOAnalysis;  // NEW
   actionItems: {
     immediate: string[];    // Do this now
     shortTerm: string[];    // This week

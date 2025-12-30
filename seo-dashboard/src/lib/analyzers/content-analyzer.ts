@@ -156,15 +156,21 @@ export class ContentAnalyzer {
     // Simple readability score (0-100)
     const readabilityScore = this.calculateReadability(mainContent);
 
+    // Check for heading hierarchy issues (H1 directly to H3, skipping H2)
+    const hasHeadingHierarchyIssue = h1Count > 0 && h3Count > 0 && h2Count === 0;
+
     return {
       url,
       title,
+      titleLength: title.length,
+      isTitleUnique: true, // Will be determined in aggregate analysis
       metaDescription,
       metaDescriptionLength: metaDescription.length,
       isMetaUnique: true, // Will be determined in aggregate analysis
       h1Count,
       h2Count,
       h3Count,
+      hasHeadingHierarchyIssue,
       totalWordCount,
       uniqueWordCount,
       templateRatio,
@@ -205,7 +211,7 @@ export class ContentAnalyzer {
     return words.filter(w => !templateWords.has(w) && w.length > 3);
   }
 
-  private detectFAQ($: cheerio.CheerioAPI, content: string): boolean {
+  private detectFAQ($: cheerio.Root, content: string): boolean {
     // Check for FAQ schema
     const hasFAQSchema = $('script[type="application/ld+json"]').text().includes('FAQPage');
     if (hasFAQSchema) return true;
@@ -219,7 +225,7 @@ export class ContentAnalyzer {
     );
   }
 
-  private countQuestions($: cheerio.CheerioAPI, content: string): number {
+  private countQuestions($: cheerio.Root, content: string): number {
     // Count question marks in headings
     let count = 0;
     $('h2, h3, h4').each((_, el) => {
@@ -262,6 +268,20 @@ export class ContentAnalyzer {
     const pagesWithoutFAQ: string[] = [];
     const pagesWithoutSchema: string[] = [];
     const imagesWithoutAlt: { page: string; images: string[] }[] = [];
+
+    // NEW: Title tag tracking
+    const missingTitles: string[] = [];
+    const titlesTooShort: string[] = [];
+    const titlesTooLong: string[] = [];
+    const titleMap = new Map<string, string[]>();
+
+    // NEW: URL issues
+    const urlsWithUnderscores: string[] = [];
+    const urlsTooLong: string[] = [];
+
+    // NEW: Heading hierarchy
+    const headingHierarchyIssues: string[] = [];
+    const pagesWithoutH2: string[] = [];
 
     const contentQualityDistribution = {
       poor: 0,
@@ -331,6 +351,38 @@ export class ContentAnalyzer {
           images: [], // Would need to track actual image srcs
         });
       }
+
+      // NEW: Check title tags
+      if (!analysis.title || analysis.title.length === 0) {
+        missingTitles.push(url);
+      } else {
+        if (analysis.titleLength < 30) {
+          titlesTooShort.push(url);
+        } else if (analysis.titleLength > 60) {
+          titlesTooLong.push(url);
+        }
+        // Track for duplicates
+        const normalizedTitle = analysis.title.toLowerCase().trim();
+        const existingTitles = titleMap.get(normalizedTitle) || [];
+        existingTitles.push(url);
+        titleMap.set(normalizedTitle, existingTitles);
+      }
+
+      // NEW: Check URL issues
+      if (url.includes('_')) {
+        urlsWithUnderscores.push(url);
+      }
+      if (url.length > 200) {
+        urlsTooLong.push(url);
+      }
+
+      // NEW: Check heading hierarchy
+      if (analysis.hasHeadingHierarchyIssue) {
+        headingHierarchyIssues.push(url);
+      }
+      if (analysis.h2Count === 0 && analysis.h1Count > 0) {
+        pagesWithoutH2.push(url);
+      }
     }
 
     // Find duplicate meta descriptions
@@ -350,6 +402,14 @@ export class ContentAnalyzer {
     // Sort thin content by severity
     thinContentPages.sort((a, b) => a.uniqueWordCount - b.uniqueWordCount);
 
+    // Find duplicate titles
+    const duplicateTitles: { title: string; pages: string[] }[] = [];
+    for (const [title, urls] of titleMap) {
+      if (urls.length > 1) {
+        duplicateTitles.push({ title, pages: urls });
+      }
+    }
+
     return {
       thinContentPages: thinContentPages.slice(0, 100),
       missingMetaDescriptions,
@@ -362,6 +422,17 @@ export class ContentAnalyzer {
       averageWordCount: pages.size > 0 ? totalWordCount / pages.size : 0,
       averageUniqueContentRatio: pages.size > 0 ? totalUniqueRatio / pages.size : 0,
       contentQualityDistribution,
+      // NEW: Title Tag Analysis
+      missingTitles,
+      duplicateTitles,
+      titlesTooShort,
+      titlesTooLong,
+      // NEW: URL Issues
+      urlsWithUnderscores,
+      urlsTooLong,
+      // NEW: Heading Hierarchy
+      headingHierarchyIssues,
+      pagesWithoutH2,
     };
   }
 

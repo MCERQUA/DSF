@@ -6,12 +6,13 @@ import { IssuesList } from '@/components/IssuesList'
 import { LinkAnalysisCard } from '@/components/LinkAnalysisCard'
 import { BlogAnalysisCard } from '@/components/BlogAnalysisCard'
 import { ContentAnalysisCard } from '@/components/ContentAnalysisCard'
+import { TechnicalSEOCard } from '@/components/TechnicalSEOCard'
 import { ActionItems } from '@/components/ActionItems'
 import { DisabledFeatureCard } from '@/components/DisabledFeatureCard'
 import { ReportView } from '@/components/ReportView'
 import { mockReport } from '@/lib/mock-data'
 
-type Tab = 'overview' | 'issues' | 'links' | 'content' | 'blog' | 'report' | 'future'
+type Tab = 'overview' | 'issues' | 'links' | 'content' | 'blog' | 'technical' | 'report' | 'future'
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState<Tab>('overview')
@@ -22,6 +23,7 @@ export default function Dashboard() {
     { id: 'issues', label: 'Issues', count: report.summary.criticalIssues + report.summary.warnings },
     { id: 'links', label: 'Links' },
     { id: 'content', label: 'Content' },
+    { id: 'technical', label: 'Technical' },
     { id: 'blog', label: 'Blog' },
     { id: 'report', label: 'Full Report' },
     { id: 'future', label: 'Coming Soon' },
@@ -155,6 +157,10 @@ export default function Dashboard() {
 
         {activeTab === 'blog' && (
           <BlogAnalysisCard analysis={report.blogAnalysis} />
+        )}
+
+        {activeTab === 'technical' && (
+          <TechnicalSEOCard analysis={report.technicalAnalysis} />
         )}
 
         {activeTab === 'report' && (

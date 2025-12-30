@@ -113,14 +113,11 @@ export const servicePages = services.map(s => ({
   priority: 'high',
 }));
 
-// Blog posts (known)
+// Blog posts - LIVE SITE REALITY: Only 3 placeholder posts with lorem ipsum (worthless)
 export const blogPosts = [
-  { slug: 'benefits-of-spray-foam-insulation', title: 'Benefits of Spray Foam Insulation for Your Home' },
-  { slug: 'when-to-replace-insulation', title: 'How to Know When Your Insulation Needs Replacement' },
-  { slug: 'commercial-insulation-guide', title: 'Commercial Insulation: What Business Owners Need to Know' },
-  { slug: 'open-cell-vs-closed-cell', title: 'Open-Cell vs Closed-Cell Spray Foam: Which is Right for You?' },
-  { slug: 'energy-savings-insulation', title: 'Energy Savings: How Proper Insulation Pays for Itself' },
-  { slug: 'preparing-for-texas-summers', title: 'Preparing Your Home for West Texas Summers' },
+  { slug: 'this-is-a-blog-post', title: 'This Is a Blog Post', isPlaceholder: true },
+  { slug: 'this-is-a-blog-post-2', title: 'This Is a Blog Post', isPlaceholder: true },
+  { slug: 'this-is-a-blog-post-3', title: 'This Is a Blog Post', isPlaceholder: true },
 ];
 
 // Generate all expected URLs
