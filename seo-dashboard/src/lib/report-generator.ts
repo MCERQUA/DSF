@@ -146,9 +146,10 @@ export class ReportGenerator {
     }
 
     // Thin content dominance
+    const qualityValues = Object.values(contentAnalysis.contentQualityDistribution) as number[];
+    const totalQualityPages = qualityValues.reduce((a, b) => a + b, 0);
     const thinRate = (contentAnalysis.contentQualityDistribution.poor +
-      contentAnalysis.contentQualityDistribution.thin) /
-      Object.values(contentAnalysis.contentQualityDistribution).reduce((a: number, b: number) => a + b, 0);
+      contentAnalysis.contentQualityDistribution.thin) / totalQualityPages;
     if (thinRate > 0.7) {
       score -= 20;
     } else if (thinRate > 0.5) {
