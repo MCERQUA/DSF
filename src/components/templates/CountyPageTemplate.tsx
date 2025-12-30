@@ -115,6 +115,47 @@ export default function CountyPageTemplate({
         </div>
       </section>
 
+      {/* Common Problems Section */}
+      <section className="py-16 md:py-20 overflow-hidden">
+        <div className="container-custom">
+          <ScrollAnimation className="text-center mb-8 md:mb-12">
+            <h2 className="section-title text-gray-800 mb-4">
+              Insulation Problems We Solve Throughout {countyName}
+            </h2>
+            <p className="text-gray-600 max-w-3xl mx-auto">
+              Homes and businesses across {countyName} face these common challenges that {serviceName.toLowerCase()} can address:
+            </p>
+          </ScrollAnimation>
+
+          <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" staggerDelay={0.1}>
+            {[
+              { title: 'High Energy Bills', description: `${countyName} property owners save up to 50% on energy costs with proper spray foam insulation.` },
+              { title: 'Extreme Temperature Swings', description: `Combat the West Texas heat and cold that affects homes throughout ${countyName}.` },
+              { title: 'Dust & Allergen Infiltration', description: `Seal your ${countyName} home against the dust and allergens common in our region.` },
+              { title: 'Moisture & Condensation', description: `Prevent moisture damage in ${countyName} buildings with closed-cell spray foam.` },
+              { title: 'Drafty Rooms', description: `Eliminate uncomfortable drafts in older ${countyName} homes and buildings.` },
+              { title: 'HVAC Overwork', description: `Reduce strain on your HVAC system and extend its life with better insulation.` },
+            ].map((problem, index) => (
+              <StaggerItem key={index}>
+                <motion.div
+                  className="bg-gray-50 p-6 rounded-lg"
+                  whileHover={{ y: -5 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="flex items-center gap-3 mb-3">
+                    <svg className="w-6 h-6 text-tan-gold flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    <h3 className="font-bold text-gray-800">{problem.title}</h3>
+                  </div>
+                  <p className="text-gray-600 text-sm">{problem.description}</p>
+                </motion.div>
+              </StaggerItem>
+            ))}
+          </StaggerContainer>
+        </div>
+      </section>
+
       {/* Cities in County Section */}
       <section className="py-16 md:py-20 bg-gray-50 overflow-hidden">
         <div className="container-custom">

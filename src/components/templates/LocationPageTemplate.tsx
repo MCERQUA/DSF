@@ -96,7 +96,7 @@ export default function LocationPageTemplate({
               </motion.div>
             </ScrollAnimation>
             <ScrollAnimation direction="right" delay={0.2}>
-              <p className="section-subtitle mb-2">Expert Insulation Services</p>
+              <p className="section-subtitle mb-2">Expert Insulation Services in {cityName}</p>
               <h2 className="section-title text-gray-800 mb-6">
                 Professional {serviceName} in {cityName}, TX
               </h2>
@@ -104,13 +104,57 @@ export default function LocationPageTemplate({
                 {serviceDescription}
               </p>
               <p className="text-gray-600 leading-relaxed mb-6 text-sm md:text-base">
-                At Desert Spray Foaming, we understand the unique insulation needs of {cityName} residents and businesses. Our experienced team provides top-quality {serviceName.toLowerCase()} solutions tailored to your specific requirements, ensuring maximum comfort and energy efficiency.
+                At Desert Spray Foaming, we understand the unique insulation needs of {cityName} residents and businesses in {county}. The West Texas climate presents challenges with extreme heat in summer and cold winters, making quality insulation essential. Our experienced team provides top-quality {serviceName.toLowerCase()} solutions tailored to {cityName}&apos;s specific climate requirements, ensuring maximum comfort and energy efficiency year-round.
+              </p>
+              <p className="text-gray-600 leading-relaxed mb-6 text-sm md:text-base">
+                Whether you&apos;re a homeowner in {cityName} looking to reduce energy bills or a business owner needing commercial insulation services, Desert Spray Foaming has the expertise to deliver exceptional results. We serve all of {cityName}, TX and the surrounding {county} communities.
               </p>
               <Link href="/contact-us/" className="btn-secondary">
-                Contact Our Team
+                Contact Our {cityName} Team
               </Link>
             </ScrollAnimation>
           </div>
+        </div>
+      </section>
+
+      {/* Common Problems Section */}
+      <section className="py-16 md:py-20 overflow-hidden">
+        <div className="container-custom">
+          <ScrollAnimation className="text-center mb-8 md:mb-12">
+            <h2 className="section-title text-gray-800 mb-4">
+              Common Insulation Problems We Solve in {cityName}
+            </h2>
+            <p className="text-gray-600 max-w-3xl mx-auto">
+              {cityName} homes and businesses face unique challenges. Here&apos;s how {serviceName.toLowerCase()} can help:
+            </p>
+          </ScrollAnimation>
+
+          <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" staggerDelay={0.1}>
+            {[
+              { title: 'High Energy Bills', description: `Reduce your ${cityName} energy costs by up to 50% with proper insulation that prevents heat transfer.` },
+              { title: 'Uneven Temperatures', description: `Eliminate hot and cold spots in your ${cityName} home for consistent comfort in every room.` },
+              { title: 'Dust & Allergens', description: `Spray foam creates an air barrier that keeps ${county} dust and allergens out of your living space.` },
+              { title: 'Moisture Problems', description: `Prevent condensation and moisture damage common in ${cityName} buildings with closed-cell foam.` },
+              { title: 'Noise Reduction', description: `Enjoy a quieter home by blocking outside noise from ${cityName} traffic and neighbors.` },
+              { title: 'Pest Prevention', description: `Seal gaps and cracks that allow pests to enter your ${cityName} property.` },
+            ].map((problem, index) => (
+              <StaggerItem key={index}>
+                <motion.div
+                  className="bg-gray-50 p-6 rounded-lg"
+                  whileHover={{ y: -5 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="flex items-center gap-3 mb-3">
+                    <svg className="w-6 h-6 text-tan-gold flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    <h3 className="font-bold text-gray-800">{problem.title}</h3>
+                  </div>
+                  <p className="text-gray-600 text-sm">{problem.description}</p>
+                </motion.div>
+              </StaggerItem>
+            ))}
+          </StaggerContainer>
         </div>
       </section>
 
