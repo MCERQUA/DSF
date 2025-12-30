@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { HealthScoreCard } from '@/components/HealthScoreCard'
 import { IssuesList } from '@/components/IssuesList'
 import { LinkAnalysisCard } from '@/components/LinkAnalysisCard'
@@ -16,7 +16,9 @@ type Tab = 'overview' | 'issues' | 'links' | 'content' | 'blog' | 'technical' | 
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState<Tab>('overview')
-  const report = mockReport // In production, this would come from the analyzer
+  const [showAnalysisModal, setShowAnalysisModal] = useState(false)
+  const [isAnalyzing, setIsAnalyzing] = useState(false)
+  const report = mockReport // Currently shows live site data - will update when domain migrates
 
   const tabs: { id: Tab; label: string; count?: number }[] = [
     { id: 'overview', label: 'Overview' },
@@ -43,7 +45,10 @@ export default function Dashboard() {
               <span className="text-sm text-slate-400">
                 Last analyzed: {new Date(report.generatedAt).toLocaleDateString()}
               </span>
-              <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors">
+              <button
+                onClick={() => setShowAnalysisModal(true)}
+                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors"
+              >
                 Run Analysis
               </button>
             </div>
@@ -209,11 +214,76 @@ export default function Dashboard() {
         )}
       </main>
 
+      {/* Analysis Modal */}
+      {showAnalysisModal && (
+        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
+          <div className="bg-slate-800 rounded-xl max-w-lg w-full p-6 border border-slate-700">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-bold text-white">Site Analysis</h2>
+              <button
+                onClick={() => setShowAnalysisModal(false)}
+                className="text-slate-400 hover:text-white text-2xl leading-none"
+              >
+                &times;
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              <div className="p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg">
+                <p className="text-sm text-blue-400 font-medium mb-2">Current Data Source</p>
+                <p className="text-sm text-slate-300">
+                  This dashboard displays analysis of the <strong>live site</strong> at{' '}
+                  <a href="https://desertsprayfoaming.com" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">
+                    desertsprayfoaming.com
+                  </a>
+                </p>
+              </div>
+
+              <div className="p-4 bg-slate-700/50 rounded-lg">
+                <p className="text-sm text-slate-300 mb-3">
+                  The current report reflects issues found on the original WordPress site.
+                  When you take over the domain with the new Astro site, scores will improve significantly.
+                </p>
+                <div className="text-xs text-slate-400 space-y-1">
+                  <p><strong>Current score:</strong> 22/100 (live WordPress site)</p>
+                  <p><strong>Expected after migration:</strong> 75-85/100</p>
+                </div>
+              </div>
+
+              <div className="p-4 bg-amber-500/10 border border-amber-500/20 rounded-lg">
+                <p className="text-sm text-amber-400 font-medium mb-2">Live Analysis Coming Soon</p>
+                <p className="text-sm text-slate-300">
+                  Real-time crawling and analysis will be available in a future update.
+                  For now, the report is updated manually when significant changes are detected.
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-6 flex justify-end gap-3">
+              <button
+                onClick={() => setShowAnalysisModal(false)}
+                className="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white text-sm font-medium rounded-lg transition-colors"
+              >
+                Close
+              </button>
+              <a
+                href="https://desertsprayfoaming.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors"
+              >
+                View Live Site
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Footer */}
       <footer className="bg-slate-800 border-t border-slate-700 mt-auto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <p className="text-sm text-slate-400 text-center">
-            SEO Dashboard for Desert Spray Foaming • Data is analyzed from static build output
+            SEO Dashboard for Desert Spray Foaming • Analyzing live site at desertsprayfoaming.com
           </p>
         </div>
       </footer>
