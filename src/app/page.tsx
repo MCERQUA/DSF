@@ -13,7 +13,7 @@ export default function HomePage() {
       {/* SECTION 0: Hero Section - Background image with text left, form right */}
       <section
         className="relative bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: 'url(/images/hero-main.jpg)' }}
+        style={{ backgroundImage: 'url(/images/home-hero-sprayfoam-insulation.jpg)' }}
       >
         <div className="absolute inset-0 bg-purple-dark/60" />
         <div className="container-custom relative z-10 py-20">
@@ -56,8 +56,8 @@ export default function HomePage() {
                 style={{ boxShadow: '-25px -25px 0px 0px #46276A' }}
               >
                 <Image
-                  src="/images/insulation-work.jpg"
-                  alt="Insulation work in progress"
+                  src="/images/installing-spray-foam-insulation.jpg"
+                  alt="Installing spray foam insulation"
                   width={440}
                   height={744}
                   className="w-full max-w-[440px] h-auto"
@@ -172,7 +172,18 @@ export default function HomePage() {
                 fill
                 className="object-cover transition-transform duration-500 group-hover:scale-110"
               />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300" />
+              <div className="absolute inset-0 bg-purple-dark/70" />
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6">
+                <h3 className="text-2xl font-bold text-white uppercase tracking-[3px] mb-4">
+                  Attic Insulation
+                </h3>
+                <p className="text-gray-200 text-sm tracking-[1px] leading-[1.6] mb-6">
+                  Keep your home comfortable year-round with professional attic insulation services.
+                </p>
+                <span className="inline-block bg-[#46276A] hover:bg-tan-gold text-white font-bold uppercase text-sm tracking-[2px] px-4 py-2 transition-all duration-300">
+                  Learn More
+                </span>
+              </div>
             </Link>
 
             {/* Commercial Insulation */}
@@ -183,13 +194,24 @@ export default function HomePage() {
                 fill
                 className="object-cover transition-transform duration-500 group-hover:scale-110"
               />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300" />
+              <div className="absolute inset-0 bg-purple-dark/70" />
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6">
+                <h3 className="text-2xl font-bold text-white uppercase tracking-[3px] mb-4">
+                  Commercial Insulation
+                </h3>
+                <p className="text-gray-200 text-sm tracking-[1px] leading-[1.6] mb-6">
+                  Efficient insulation solutions for businesses and commercial properties.
+                </p>
+                <span className="inline-block bg-[#46276A] hover:bg-tan-gold text-white font-bold uppercase text-sm tracking-[2px] px-4 py-2 transition-all duration-300">
+                  Learn More
+                </span>
+              </div>
             </Link>
 
-            {/* Insulation Removal - with overlay */}
+            {/* Insulation Removal */}
             <Link href="/insulation-removal/" className="relative aspect-square group overflow-hidden block">
               <Image
-                src="/images/insulation-removal.jpg"
+                src="/images/full-insulation-bag.jpg"
                 alt="Insulation Removal"
                 fill
                 className="object-cover transition-transform duration-500 group-hover:scale-110"
@@ -211,12 +233,23 @@ export default function HomePage() {
             {/* Spray Foam Insulation */}
             <Link href="/spray-foam-insulation/" className="relative aspect-square group overflow-hidden block">
               <Image
-                src="/images/spray-foam-insulation.jpg"
+                src="/images/hero-bg.jpg"
                 alt="Spray Foam Insulation"
                 fill
                 className="object-cover transition-transform duration-500 group-hover:scale-110"
               />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300" />
+              <div className="absolute inset-0 bg-purple-dark/70" />
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6">
+                <h3 className="text-2xl font-bold text-white uppercase tracking-[3px] mb-4">
+                  Spray Foam Insulation
+                </h3>
+                <p className="text-gray-200 text-sm tracking-[1px] leading-[1.6] mb-6">
+                  Superior air sealing and insulation with open-cell and closed-cell spray foam options.
+                </p>
+                <span className="inline-block bg-[#46276A] hover:bg-tan-gold text-white font-bold uppercase text-sm tracking-[2px] px-4 py-2 transition-all duration-300">
+                  Learn More
+                </span>
+              </div>
             </Link>
           </div>
         </div>
@@ -291,38 +324,37 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* SECTION 5: About Us - Purple box left, image right */}
-      <section className="relative">
-        <div className="grid grid-cols-1 lg:grid-cols-2">
-          {/* Left: Purple Content */}
-          <div className="bg-purple-dark py-20 px-8 lg:px-16 flex items-center">
-            <div>
-              <h4 className="text-tan-gold text-[14px] font-medium uppercase tracking-[5px] leading-[1.3] mb-4">
-                About Us
-              </h4>
-              <h2 className="text-[34px] font-bold text-white uppercase tracking-[5px] leading-[1.3] mb-6">
-                Introducing Desert Spray Foaming
-              </h2>
-              <p className="text-gray-300 text-[15px] tracking-[2px] leading-[1.8] mb-8">
-                With over 6 years of experience in the insulation industry and a passion for his work, Klass started Desert Spray Foaming in 2023. Our mission is to provide value, a comfortable indoor environment, customer satisfaction, affordable pricing, and a quality product. Whether commercial or residential, big or small, we&apos;ve got you covered with our range of services, including open-cell and closed-cell spray foam options, attic insulation, and insulation removal. At Desert Spray Foaming, we&apos;re not just about insulation but about creating lasting relationships and spaces you&apos;ll love.
-              </p>
-              <Link
-                href="/contact-us/"
-                className="inline-block bg-tan-gold hover:bg-white hover:text-purple-dark text-white font-bold uppercase text-base tracking-[3px] px-6 py-3 transition-all duration-300 hover:-translate-y-1"
-              >
-                Get In Touch
-              </Link>
-            </div>
-          </div>
+      {/* SECTION 5: About Us - Full-width image with transparent purple card */}
+      <section className="relative min-h-[600px]">
+        {/* Background Image - showing top portion */}
+        <Image
+          src="/images/installing-spray-foam-insulation.jpg"
+          alt="Desert Spray Foaming at work"
+          fill
+          className="object-cover object-top"
+        />
+        {/* Light purple tint overlay */}
+        <div className="absolute inset-0 bg-purple-dark/30" />
 
-          {/* Right: Image */}
-          <div className="relative min-h-[500px]">
-            <Image
-              src="/images/insulation-work.jpg"
-              alt="Desert Spray Foaming at work"
-              fill
-              className="object-cover"
-            />
+        {/* Content */}
+        <div className="container-custom relative z-10 py-20 flex items-center min-h-[600px]">
+          {/* Semi-transparent purple card */}
+          <div className="bg-purple-dark/90 py-12 px-8 lg:px-12 max-w-xl">
+            <h4 className="text-tan-gold text-[14px] font-medium uppercase tracking-[5px] leading-[1.3] mb-4">
+              About Us
+            </h4>
+            <h2 className="text-[34px] font-bold text-white uppercase tracking-[5px] leading-[1.3] mb-6">
+              Introducing Desert Spray Foaming
+            </h2>
+            <p className="text-gray-300 text-[15px] tracking-[2px] leading-[1.8] mb-8">
+              With over 6 years of experience in the insulation industry and a passion for his work, Klass started Desert Spray Foaming in 2023. Our mission is to provide value, a comfortable indoor environment, customer satisfaction, affordable pricing, and a quality product. Whether commercial or residential, big or small, we&apos;ve got you covered with our range of services, including open-cell and closed-cell spray foam options, attic insulation, and insulation removal. At Desert Spray Foaming, we&apos;re not just about insulation but about creating lasting relationships and spaces you&apos;ll love.
+            </p>
+            <Link
+              href="/contact-us/"
+              className="inline-block bg-tan-gold hover:bg-white hover:text-purple-dark text-white font-bold uppercase text-base tracking-[3px] px-6 py-3 transition-all duration-300 hover:-translate-y-1"
+            >
+              Get In Touch
+            </Link>
           </div>
         </div>
       </section>
