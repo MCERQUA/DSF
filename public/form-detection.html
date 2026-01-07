@@ -1,0 +1,24 @@
+<!--
+  This hidden HTML file helps Netlify detect form fields during build.
+  The actual form is rendered by React in ContactForm.tsx.
+  This file is never shown to users.
+-->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Form Detection</title>
+</head>
+<body>
+  <form name="contact" netlify netlify-honeypot="bot-field" hidden>
+    <input name="form-name" type="hidden" value="contact" />
+    <input name="bot-field" />
+    <input name="firstName" type="text" />
+    <input name="lastName" type="text" />
+    <input name="email" type="email" />
+    <input name="phone" type="tel" />
+    <textarea name="message"></textarea>
+    <input name="consent" type="checkbox" />
+  </form>
+</body>
+</html>
